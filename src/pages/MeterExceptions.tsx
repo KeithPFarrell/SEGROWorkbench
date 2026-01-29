@@ -4,7 +4,6 @@ import { StatusPill } from '../components/StatusPill';
 import { Button } from '../components/Button';
 import { MarketBadge } from '../components/MarketBadge';
 import { useStore } from '../store/useStore';
-import { formatDateTime } from '../utils/dateFormat';
 
 export const MeterExceptions: React.FC = () => {
   const { meterExceptionTasks, updateMeterExceptionTask, addActivityLog } = useStore();

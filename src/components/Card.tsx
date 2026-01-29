@@ -5,7 +5,7 @@ interface CardProps {
   className?: string;
   accent?: 'red' | 'teal' | 'yellow' | 'none';
   hover?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Card: React.FC<CardProps> = ({
