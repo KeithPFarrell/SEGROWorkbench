@@ -160,25 +160,31 @@ function AppContent() {
               })}
             </div>
 
-            {/* User Info */}
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg">
-                <div className="w-2 h-2 bg-segro-teal-accent rounded-full"></div>
-                <span className="text-white text-sm font-semibold">Demo Mode</span>
-              </div>
+            {/* User Info & HCL Logo */}
+            <div className="flex items-center gap-4">
+              {/* User Initials */}
               <div className="flex items-center gap-2 text-white">
-                <div className="w-8 h-8 rounded-full bg-segro-red flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-full bg-segro-red flex items-center justify-center font-bold text-sm">
                   SM
                 </div>
-                <span className="hidden md:inline text-sm font-semibold">Sarah Mitchell</span>
               </div>
+
+              {/* Separator */}
+              <div className="h-8 w-px bg-white/20"></div>
+
+              {/* HCL Software Logo */}
+              <img
+                src={`${import.meta.env.BASE_URL}hcl-logo.png`}
+                alt="Powered by HCL Software"
+                className="h-6 w-auto object-contain"
+              />
             </div>
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-[1920px] mx-auto px-6 py-8 relative z-10">
+      <main className="max-w-[1920px] mx-auto px-6 py-8 pb-16 relative z-10">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/ul360-uploads" element={<UL360Uploads />} />
@@ -188,17 +194,6 @@ function AppContent() {
           <Route path="/files-archive" element={<FilesArchive />} />
         </Routes>
       </main>
-
-      {/* Footer */}
-      <footer className="relative z-10 mt-16 bg-segro-charcoal">
-        <div className="max-w-[1920px] mx-auto px-6 py-4">
-          <div className="text-center">
-            <p className="text-sm text-white font-semibold">
-              Powered by <span className="text-segro-red font-bold">HCL Software</span>
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
