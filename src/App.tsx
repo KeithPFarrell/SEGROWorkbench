@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard';
 import { UL360Uploads } from './pages/UL360Uploads';
@@ -17,9 +17,37 @@ interface NavItem {
   badge?: number;
 }
 
+interface User {
+  id: string;
+  name: string;
+  initials: string;
+  role: string;
+}
+
+const users: User[] = [
+  { id: '1', name: 'Sarah Mitchell', initials: 'SM', role: 'ESG Manager' },
+  { id: '2', name: 'James Thompson', initials: 'JT', role: 'Data Analyst' },
+  { id: '3', name: 'Emma Rodriguez', initials: 'ER', role: 'Compliance Officer' },
+];
+
 function AppContent() {
   const location = useLocation();
   const { ul360Tasks, meterExceptionTasks, validationTasks } = useStore();
+  const [currentUser, setCurrentUser] = useState<User>(users[0]);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const ul360Badge = ul360Tasks.filter((t) => t.status === 'attention' || t.status === 'pending').length;
   const exceptionsBadge = meterExceptionTasks.filter((t) => t.status === 'attention').length;
@@ -162,11 +190,64 @@ function AppContent() {
 
             {/* User Info & HCL Logo */}
             <div className="flex items-center gap-4">
-              {/* User Initials */}
-              <div className="flex items-center gap-2 text-white">
-                <div className="w-8 h-8 rounded-full bg-segro-red flex items-center justify-center font-bold text-sm">
-                  SM
-                </div>
+              {/* User Dropdown */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                  className="flex items-center gap-2 text-white hover:bg-white/10 rounded-lg px-3 py-2 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-full bg-segro-red flex items-center justify-center font-bold text-sm">
+                    {currentUser.initials}
+                  </div>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isUserDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-segro-lightgray overflow-hidden z-50">
+                    <div className="p-3 bg-segro-offwhite border-b border-segro-lightgray">
+                      <p className="text-xs font-semibold text-segro-midgray uppercase">Select User</p>
+                    </div>
+                    <div className="py-2">
+                      {users.map((user) => (
+                        <button
+                          key={user.id}
+                          onClick={() => {
+                            setCurrentUser(user);
+                            setIsUserDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-segro-offwhite transition-colors ${
+                            currentUser.id === user.id ? 'bg-segro-teal/10' : ''
+                          }`}
+                        >
+                          <div className="w-10 h-10 rounded-full bg-segro-red flex items-center justify-center font-bold text-white">
+                            {user.initials}
+                          </div>
+                          <div className="flex-1 text-left">
+                            <div className="font-semibold text-segro-charcoal text-sm">{user.name}</div>
+                            <div className="text-xs text-segro-midgray">{user.role}</div>
+                          </div>
+                          {currentUser.id === user.id && (
+                            <svg className="w-5 h-5 text-segro-teal" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Separator */}
