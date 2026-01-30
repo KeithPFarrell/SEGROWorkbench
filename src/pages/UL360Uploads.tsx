@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card } from '../components/Card';
 import { StatusPill } from '../components/StatusPill';
 import { Button } from '../components/Button';
-import { MarketBadge } from '../components/MarketBadge';
 import { useStore } from '../store/useStore';
 import { formatDateTime } from '../utils/dateFormat';
 
@@ -57,7 +56,7 @@ export const UL360Uploads: React.FC = () => {
       action: 'Detected Partial Upload Success',
       market: currentTask.market,
       taskId: currentTask.id,
-      details: `Upload completed with ${currentTask.errorCount || 0} errors requiring attention`,
+      details: `Upload completed with errors requiring attention`,
     });
   };
 
@@ -99,22 +98,17 @@ export const UL360Uploads: React.FC = () => {
               className={`cursor-pointer ${selectedTask === task.id ? 'ring-2 ring-segro-teal' : ''}`}
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <MarketBadge market={task.market} />
-                  <StatusPill status={task.status} />
-                </div>
+                <StatusPill status={task.status} />
               </div>
               <h3 className="font-bold text-segro-charcoal mb-2">{task.title}</h3>
               <p className="text-sm text-segro-midgray mb-3">{task.description}</p>
+              <div className="text-xs text-segro-midgray mb-2">
+                <span>Created: {formatDateTime(task.createdAt)}</span>
+              </div>
               <div className="flex gap-4 text-xs text-segro-midgray">
                 <span>
                   <strong className="text-segro-charcoal">{task.meterCount}</strong> meters
                 </span>
-                {task.errorCount && (
-                  <span className="text-segro-red">
-                    <strong>{task.errorCount}</strong> errors
-                  </span>
-                )}
               </div>
             </Card>
           ))}
@@ -127,17 +121,14 @@ export const UL360Uploads: React.FC = () => {
           <Card accent="teal">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <MarketBadge market={currentTask.market} size="md" />
-                  <h2 className="text-2xl font-bold text-segro-charcoal">{currentTask.title}</h2>
-                </div>
+                <h2 className="text-2xl font-bold text-segro-charcoal mb-3">{currentTask.title}</h2>
                 <p className="text-segro-midgray">{currentTask.description}</p>
               </div>
               <StatusPill status={currentTask.status} />
             </div>
 
             {/* Task Metadata */}
-            <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-white rounded-lg">
+            <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-white rounded-lg">
               <div>
                 <div className="text-xs text-segro-midgray mb-1">Created</div>
                 <div className="text-sm font-semibold text-segro-charcoal">
@@ -154,12 +145,6 @@ export const UL360Uploads: React.FC = () => {
                 <div className="text-xs text-segro-midgray mb-1">Meter Count</div>
                 <div className="text-sm font-semibold text-segro-charcoal">{currentTask.meterCount}</div>
               </div>
-              {currentTask.errorCount && (
-                <div>
-                  <div className="text-xs text-segro-midgray mb-1">Error Count</div>
-                  <div className="text-sm font-semibold text-segro-red">{currentTask.errorCount}</div>
-                </div>
-              )}
             </div>
 
             {/* Workflow Steps */}
@@ -184,7 +169,7 @@ export const UL360Uploads: React.FC = () => {
                       <h4 className="font-bold text-segro-charcoal">Download Upload File</h4>
                     </div>
                     <p className="text-sm text-segro-midgray ml-11 mb-3">
-                      Download the generated meter data file for UL 360 upload
+                      Download File for UL 360
                     </p>
                     {!currentTask.downloadCompleted && (
                       <div className="ml-11">
@@ -237,7 +222,7 @@ export const UL360Uploads: React.FC = () => {
                       <h4 className="font-bold text-segro-charcoal">Upload to UL 360</h4>
                     </div>
                     <p className="text-sm text-segro-midgray ml-11 mb-3">
-                      Upload the file to UL 360 platform and report the result
+                      Access UL 360 and initiate an upload. When the upload is complete, provide feedback with one of the options below.
                     </p>
                     {currentTask.downloadCompleted && !currentTask.uploadCompleted && (
                       <div className="ml-11 flex gap-2">
@@ -295,10 +280,10 @@ export const UL360Uploads: React.FC = () => {
                         >
                           3
                         </div>
-                        <h4 className="font-bold text-segro-charcoal">Upload Error Correction File</h4>
+                        <h4 className="font-bold text-segro-charcoal">Review and Correct Errors</h4>
                       </div>
                       <p className="text-sm text-segro-midgray ml-11 mb-3">
-                        Upload a corrected file for the {currentTask.errorCount} meters that failed
+                        Review the errors and manually correct them to ensure they upload successfully to UL 360. Please attach the UL 360 error report below so that we can learn, track, and audit these failures.
                       </p>
                       {!currentTask.errorReportUploaded && (
                         <div className="ml-11 space-y-3">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
-import { StatusPill } from '../components/StatusPill';
 import { Button } from '../components/Button';
 import { MarketBadge } from '../components/MarketBadge';
 import { CircularProgress } from '../components/CircularProgress';
@@ -46,7 +45,7 @@ Recommended next steps:
     setIsProcessing(false);
   };
 
-  const handleFileUpload = (file: File, market: Market, cycle: string) => {
+  const handleFileUpload = (file: File, market: Market) => {
     // Determine file type based on filename
     const filename = file.name.toLowerCase();
     let fileType: 'upload' | 'exception' | 'audit' = 'upload';
@@ -68,7 +67,6 @@ Recommended next steps:
     // Add to archive files
     addArchiveFile({
       filename: file.name,
-      cycle,
       market,
       size: formatFileSize(file.size),
       type: fileType,
@@ -80,14 +78,14 @@ Recommended next steps:
       actor: 'Human',
       action: 'Uploaded Meter Data File',
       market,
-      details: `${file.name} uploaded for ${cycle}`,
+      details: `${file.name} uploaded`,
     });
   };
 
   return (
     <div className="space-y-6">
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-segro-charcoal via-segro-charcoal to-segro-teal rounded-2xl p-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-segro-charcoal via-segro-charcoal to-segro-midgray rounded-2xl p-14 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-segro-red opacity-5 rounded-full blur-3xl"></div>
         <div className="relative z-10">
           <h1 className="text-4xl font-bold mb-2">Sustainability Workbench</h1>
@@ -99,12 +97,12 @@ Recommended next steps:
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left Column - Workflow Visualization */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-3 space-y-6">
           {/* Meter Data Transposition Workflow */}
-          <div className="bg-segro-offwhite rounded-2xl p-6 border-2 border-segro-lightgray">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="bg-segro-offwhite rounded-2xl p-4 border-2 border-segro-lightgray">
+            <div className="flex items-center gap-3 mb-3">
               <svg className="w-6 h-6 text-segro-teal-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
@@ -112,17 +110,17 @@ Recommended next steps:
                 Meter Data Transposition for UL 360
               </h2>
             </div>
-            <p className="text-segro-midgray text-sm mb-6">
+            <p className="text-segro-midgray text-sm mb-4">
               Import meter data from registries, validate exceptions, and upload to UL 360 platform
             </p>
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Import New Meter Data Card */}
-              <div className="bg-segro-teal/5 rounded-2xl p-6 border-l-4 border-segro-teal">
-                <div className="flex flex-col items-center text-center space-y-3">
+              <div className="bg-segro-teal/5 rounded-2xl p-4 border-l-4 border-segro-teal">
+                <div className="flex flex-col items-center text-center space-y-2">
                   <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-segro-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-7 h-7 text-segro-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                   </div>
@@ -131,7 +129,7 @@ Recommended next steps:
                   </div>
                   <button
                     onClick={() => setShowUploadModal(true)}
-                    className="w-full bg-segro-teal text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-segro-teal-accent transition-colors"
+                    className="w-full bg-segro-teal text-white py-1.5 px-3 rounded-lg font-semibold text-sm hover:bg-segro-teal-accent transition-colors"
                   >
                     Import Data
                   </button>
@@ -141,20 +139,20 @@ Recommended next steps:
               {/* UL 360 Upload Tasks */}
               <div
                 onClick={() => navigate('/ul360-uploads')}
-                className="bg-white rounded-2xl p-6 border border-segro-lightgray border-l-4 border-l-segro-teal cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
+                className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-segro-teal cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
-                <div className="flex items-start gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-2">
                   <div className="text-segro-teal-accent">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-sm mb-1">UL 360 Upload Tasks</div>
-                    <div className="text-2xl font-bold text-segro-charcoal mb-1">
-                      {ul360Tasks.length} <span className="text-sm font-normal text-segro-midgray">tasks</span>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL 360 Upload</div>
+                    <div className="text-3xl font-bold text-segro-charcoal mb-1">
+                      {ul360Tasks.length} <span className="text-base font-normal text-segro-midgray">tasks</span>
                     </div>
-                    <div className="text-sm text-segro-midgray">
+                    <div className="text-base text-segro-midgray">
                       {ul360Tasks.reduce((sum, task) => sum + (task.meterCount || 0), 0)} meters
                     </div>
                   </div>
@@ -164,20 +162,20 @@ Recommended next steps:
               {/* Meter Exception Tasks */}
               <div
                 onClick={() => navigate('/meter-exceptions')}
-                className="bg-white rounded-2xl p-6 border border-segro-lightgray border-l-4 border-l-yellow-500 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
+                className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-yellow-500 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
-                <div className="flex items-start gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-2">
                   <div className="text-yellow-600">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-sm mb-1">Meter Exception Tasks</div>
-                    <div className="text-2xl font-bold text-segro-charcoal mb-1">
-                      {meterExceptionTasks.length} <span className="text-sm font-normal text-segro-midgray">tasks</span>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">Meter Exception</div>
+                    <div className="text-3xl font-bold text-segro-charcoal mb-1">
+                      {meterExceptionTasks.length} <span className="text-base font-normal text-segro-midgray">tasks</span>
                     </div>
-                    <div className="text-sm text-segro-midgray">
+                    <div className="text-base text-segro-midgray">
                       {meterExceptionTasks.reduce((sum, task) => sum + (task.missingMeterCount || 0), 0)} meters
                     </div>
                   </div>
@@ -187,20 +185,20 @@ Recommended next steps:
               {/* Data Validation Tasks */}
               <div
                 onClick={() => navigate('/data-validation')}
-                className="bg-white rounded-2xl p-6 border border-segro-lightgray border-l-4 border-l-yellow-500 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
+                className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-yellow-500 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
-                <div className="flex items-start gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-2">
                   <div className="text-yellow-600">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-sm mb-1">Data Validation Tasks</div>
-                    <div className="text-2xl font-bold text-segro-charcoal mb-1">
-                      {validationTasks.length} <span className="text-sm font-normal text-segro-midgray">task</span>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">Data Validation</div>
+                    <div className="text-3xl font-bold text-segro-charcoal mb-1">
+                      {validationTasks.length} <span className="text-base font-normal text-segro-midgray">task</span>
                     </div>
-                    <div className="text-sm text-segro-midgray">
+                    <div className="text-base text-segro-midgray">
                       {validationTasks.reduce((sum, task) => sum + (task.meterCount || 0), 0)} meters
                     </div>
                   </div>
@@ -210,8 +208,8 @@ Recommended next steps:
           </div>
 
           {/* Site Data Reconciliation */}
-          <div className="bg-segro-offwhite rounded-2xl p-6 border-2 border-segro-lightgray">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="bg-segro-offwhite rounded-2xl p-4 border-2 border-segro-lightgray">
+            <div className="flex items-center gap-3 mb-3">
               <svg className="w-6 h-6 text-segro-teal-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -219,43 +217,43 @@ Recommended next steps:
                 Site Data Reconciliation
               </h2>
             </div>
-            <p className="text-segro-midgray text-sm mb-6">
+            <p className="text-segro-midgray text-sm mb-4">
               Import reconciliation data, validate admin tasks, and sync with UL 360
             </p>
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Import Reconciliation Data Card */}
-              <div className="bg-segro-teal/5 rounded-2xl p-6 border-l-4 border-segro-teal">
-                <div className="flex flex-col items-center text-center space-y-3">
+              <div className="bg-segro-teal/5 rounded-2xl p-4 border-l-4 border-segro-teal">
+                <div className="flex flex-col items-center text-center space-y-2">
                   <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-segro-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-7 h-7 text-segro-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                   </div>
                   <div className="text-sm font-semibold text-segro-charcoal">
                     Import Reconciliation Data
                   </div>
-                  <button className="w-full bg-segro-teal text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-segro-teal-accent transition-colors">
+                  <button className="w-full bg-segro-teal text-white py-1.5 px-3 rounded-lg font-semibold text-sm hover:bg-segro-teal-accent transition-colors">
                     Import Data
                   </button>
                 </div>
               </div>
 
               {/* Admin Validation Tasks */}
-              <div className="bg-white rounded-2xl p-6 border border-segro-lightgray border-l-4 border-l-yellow-500">
-                <div className="flex items-start gap-3 mb-3">
+              <div className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-yellow-500">
+                <div className="flex items-start gap-3 mb-2">
                   <div className="text-yellow-600">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-sm mb-1">Admin Validation Tasks</div>
-                    <div className="text-2xl font-bold text-segro-charcoal mb-1">
-                      3 <span className="text-sm font-normal text-segro-midgray">tasks</span>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">Admin Validation</div>
+                    <div className="text-3xl font-bold text-segro-charcoal mb-1">
+                      3 <span className="text-base font-normal text-segro-midgray">tasks</span>
                     </div>
-                    <div className="text-sm text-segro-midgray">
+                    <div className="text-base text-segro-midgray">
                       22 meters
                     </div>
                   </div>
@@ -263,19 +261,19 @@ Recommended next steps:
               </div>
 
               {/* UL 360 Upload Tasks (Reconciliation) */}
-              <div className="bg-white rounded-2xl p-6 border border-segro-lightgray border-l-4 border-l-segro-teal">
-                <div className="flex items-start gap-3 mb-3">
+              <div className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-segro-teal">
+                <div className="flex items-start gap-3 mb-2">
                   <div className="text-segro-teal-accent">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-sm mb-1">UL 360 Upload Tasks</div>
-                    <div className="text-2xl font-bold text-segro-charcoal mb-1">
-                      1 <span className="text-sm font-normal text-segro-midgray">task</span>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL 360 Upload</div>
+                    <div className="text-3xl font-bold text-segro-charcoal mb-1">
+                      1 <span className="text-base font-normal text-segro-midgray">task</span>
                     </div>
-                    <div className="text-sm text-segro-midgray">
+                    <div className="text-base text-segro-midgray">
                       5 meters
                     </div>
                   </div>
@@ -310,9 +308,6 @@ Recommended next steps:
               </svg>
               <h3 className="font-bold">Process Audit Request</h3>
             </div>
-            <p className="text-white/90 text-sm mb-4">
-              Request an audit review for specific audit files and review process timelines
-            </p>
 
             {!showAuditChat ? (
               <Button
@@ -379,23 +374,50 @@ Recommended next steps:
             </div>
 
             <div className="space-y-3">
-              {meterDataCycles.slice(0, 8).map((cycle) => (
-                <div
-                  key={cycle.id}
-                  className="flex items-center justify-between p-3 bg-white rounded-lg border border-segro-lightgray"
-                >
-                  <div className="flex items-center gap-3">
-                    <MarketBadge market={cycle.market} />
-                    <div>
-                      <div className="text-sm font-semibold text-segro-charcoal">
-                        {cycle.market}
+              {meterDataCycles.slice(0, 8).map((cycle) => {
+                // Determine alarm clock color based on status
+                const getStatusColor = (status: string) => {
+                  switch (status) {
+                    case 'current':
+                      return 'text-green-500';
+                    case 'pending':
+                      return 'text-yellow-500';
+                    case 'stale':
+                      return 'text-red-500';
+                    default:
+                      return 'text-segro-midgray';
+                  }
+                };
+
+                return (
+                  <div
+                    key={cycle.id}
+                    className="flex items-center justify-between p-3 bg-white rounded-lg border border-segro-lightgray"
+                  >
+                    <div className="flex items-center gap-3">
+                      <MarketBadge market={cycle.market} />
+                      <div>
+                        <div className="text-sm text-segro-midgray">{cycle.date}</div>
                       </div>
-                      <div className="text-xs text-segro-midgray">{cycle.date}</div>
                     </div>
+                    <svg
+                      className={`w-6 h-6 ${getStatusColor(cycle.status)}`}
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      {/* Alarm clock with bells */}
+                      <path d="M12 6c-3.9 0-7 3.1-7 7s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z" />
+                      <path d="M13 9h-2v4l3.5 2.1.7-1.2-2.2-1.3V9z" />
+                      {/* Left bell */}
+                      <path d="M4.5 4.5l-1.4 1.4 2.1 2.1 1.4-1.4z" />
+                      {/* Right bell */}
+                      <path d="M19.5 4.5l-2.1 2.1 1.4 1.4 2.1-2.1z" />
+                      {/* Top button */}
+                      <circle cx="12" cy="4" r="1" />
+                    </svg>
                   </div>
-                  <StatusPill status={cycle.status} />
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-4 pt-4 border-t border-segro-lightgray">

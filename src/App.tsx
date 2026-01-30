@@ -32,10 +32,17 @@ const users: User[] = [
 
 function AppContent() {
   const location = useLocation();
-  const { ul360Tasks, meterExceptionTasks, validationTasks } = useStore();
+  const { ul360Tasks, meterExceptionTasks, validationTasks, setCurrentUsername } = useStore();
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Update store when user changes
+  const handleUserChange = (user: User) => {
+    setCurrentUser(user);
+    setCurrentUsername(user.name);
+    setIsUserDropdownOpen(false);
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -56,7 +63,7 @@ function AppContent() {
   const navItems: NavItem[] = [
     {
       path: '/',
-      label: 'Dashboard',
+      label: 'Home',
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -219,10 +226,7 @@ function AppContent() {
                       {users.map((user) => (
                         <button
                           key={user.id}
-                          onClick={() => {
-                            setCurrentUser(user);
-                            setIsUserDropdownOpen(false);
-                          }}
+                          onClick={() => handleUserChange(user)}
                           className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-segro-offwhite transition-colors ${
                             currentUser.id === user.id ? 'bg-segro-teal/10' : ''
                           }`}
@@ -257,7 +261,7 @@ function AppContent() {
               <img
                 src={`${import.meta.env.BASE_URL}hcl-logo.png`}
                 alt="Powered by HCL Software"
-                className="h-6 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
             </div>
           </div>

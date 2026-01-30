@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { MarketBadge } from '../components/MarketBadge';
-import { formatDateTime } from '../utils/dateFormat';
 import { Market } from '../types';
 import { useStore } from '../store/useStore';
 import * as XLSX from 'xlsx';
@@ -281,8 +280,6 @@ export const FilesArchive: React.FC = () => {
                     {file.filename}
                   </h3>
                   <div className="text-xs text-segro-midgray mb-3">
-                    <div>{file.cycle}</div>
-                    <div>{formatDateTime(file.generatedAt)}</div>
                     <div className="font-semibold">{file.size}</div>
                   </div>
                   <div className="flex gap-2">

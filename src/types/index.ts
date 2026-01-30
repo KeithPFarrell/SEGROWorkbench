@@ -60,6 +60,7 @@ export interface ActivityLogEntry {
   id: string;
   timestamp: string;
   actor: 'Agent' | 'Human';
+  username?: string; // For Human actors, stores the actual username
   action: string;
   market: Market;
   taskId?: string;
@@ -69,7 +70,7 @@ export interface ActivityLogEntry {
 export interface ArchiveFile {
   id: string;
   filename: string;
-  cycle: string;
+  cycle?: string;
   market: Market;
   generatedAt: string;
   size: string;

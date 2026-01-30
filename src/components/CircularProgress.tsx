@@ -18,10 +18,9 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
   const offset = circumference - (value / 100) * circumference;
 
   const getColor = () => {
-    if (value >= 90) return '#00AAA5'; // segro-teal-accent
-    if (value >= 75) return '#73AFB6'; // segro-teal
-    if (value >= 60) return '#EAB308'; // yellow
-    return '#C8191F'; // segro-red
+    if (value >= 90) return '#00AAA5'; // green - segro-teal-accent
+    if (value >= 80) return '#EAB308'; // yellow
+    return '#C8191F'; // red - segro-red
   };
 
   return (

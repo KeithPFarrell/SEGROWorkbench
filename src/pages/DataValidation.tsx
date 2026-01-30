@@ -11,8 +11,48 @@ export const DataValidation: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState(validationTasks[0]?.id || null);
   const [fixNote, setFixNote] = useState('');
   const [uploadedAudit, setUploadedAudit] = useState<File | null>(null);
+  const [validationFileDownloaded, setValidationFileDownloaded] = useState(false);
 
   const currentTask = validationTasks.find((t) => t.id === selectedTask);
+
+  const handleDownloadValidationFile = () => {
+    if (!currentTask) return;
+
+    // Create a simple CSV with validation errors
+    const csvContent = `Meter ID,Error Type,Details,Status
+MTR-001,Missing Values,Incomplete consumption data,Requires Correction
+MTR-002,Missing Values,Incomplete consumption data,Requires Correction
+MTR-003,Missing Values,Incomplete consumption data,Requires Correction
+MTR-004,Missing Values,Incomplete consumption data,Requires Correction
+MTR-005,Missing Values,Incomplete consumption data,Requires Correction
+MTR-006,Missing Values,Incomplete consumption data,Requires Correction
+MTR-007,Missing Values,Incomplete consumption data,Requires Correction
+MTR-008,Missing Values,Incomplete consumption data,Requires Correction
+MTR-009,Missing Values,Incomplete consumption data,Requires Correction
+MTR-010,Missing Values,Incomplete consumption data,Requires Correction
+MTR-011,Missing Values,Incomplete consumption data,Requires Correction
+MTR-012,Missing Values,Incomplete consumption data,Requires Correction`;
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Validation_Errors_${currentTask.market}_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+
+    setValidationFileDownloaded(true);
+
+    addActivityLog({
+      actor: 'Human',
+      action: 'Downloaded Validation Error File',
+      market: currentTask.market,
+      taskId: currentTask.id,
+      details: 'Downloaded file for offline correction',
+    });
+  };
 
   const handleAuditUpload = () => {
     if (!currentTask || !uploadedAudit || !fixNote.trim()) return;
@@ -125,9 +165,6 @@ export const DataValidation: React.FC = () => {
                   <div>
                     <h4 className="font-bold text-red-900 mb-1">{currentTask.errorType}</h4>
                     <p className="text-sm text-red-800">{currentTask.errorDetails}</p>
-                    <div className="mt-2 text-sm text-red-900">
-                      <strong>{currentTask.meterCount} meters</strong> require attention
-                    </div>
                   </div>
                 </div>
               </div>
@@ -154,21 +191,45 @@ export const DataValidation: React.FC = () => {
                   <h3 className="font-bold text-segro-charcoal mb-4">Resolve Validation Error</h3>
 
                   <div className="space-y-4">
-                    {/* Step 1: Review Errors */}
-                    <div className="flex items-start gap-3 p-4 bg-segro-offwhite rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-segro-teal-accent text-white flex items-center justify-center font-bold flex-shrink-0">
-                        ✓
+                    {/* Step 1: Download Validation Errors File */}
+                    <Card
+                      accent={validationFileDownloaded ? 'teal' : 'none'}
+                      className={validationFileDownloaded ? 'bg-segro-teal-accent/5' : 'bg-white'}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ${
+                            validationFileDownloaded
+                              ? 'bg-segro-teal-accent text-white'
+                              : 'bg-segro-red text-white'
+                          }`}
+                        >
+                          {validationFileDownloaded ? '✓' : '1'}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-segro-charcoal mb-3">Download Data Validation Errors File</h4>
+                          <ol className="list-decimal list-inside text-sm text-segro-midgray space-y-1 mb-3">
+                            <li>Review the validation errors.</li>
+                            <li>Resolve the issues offline (using your normal data correction process).</li>
+                            <li>Create a manual upload file for the corrected meters.</li>
+                            <li>Upload the manual file into UL 360 and confirm it completes successfully.</li>
+                          </ol>
+                          {!validationFileDownloaded && (
+                            <Button variant="primary" size="sm" onClick={handleDownloadValidationFile}>
+                              Download File
+                            </Button>
+                          )}
+                          {validationFileDownloaded && (
+                            <div className="text-sm text-segro-teal-accent font-semibold">
+                              File downloaded successfully
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-bold text-segro-charcoal mb-1">Review Error Details</h4>
-                        <p className="text-sm text-segro-midgray">
-                          Analyze the {currentTask.meterCount} meters with {currentTask.errorType.toLowerCase()}
-                        </p>
-                      </div>
-                    </div>
+                    </Card>
 
                     {/* Step 2: Add Fix Note */}
-                    <div className="space-y-3">
+                    <div className={`space-y-3 ${!validationFileDownloaded ? 'opacity-50 pointer-events-none' : ''}`}>
                       <label className="block">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-8 h-8 rounded-full bg-segro-red text-white flex items-center justify-center font-bold text-sm">
@@ -180,14 +241,14 @@ export const DataValidation: React.FC = () => {
                         <textarea
                           value={fixNote}
                           onChange={(e) => setFixNote(e.target.value)}
-                          placeholder="Describe the corrections made to resolve the data quality issues..."
+                          placeholder="Add a short note describing the reason for the errors. This helps us prevent the same issues in future."
                           className="w-full h-24 p-3 border border-segro-lightgray rounded-lg text-sm resize-none focus:ring-2 focus:ring-segro-teal focus:border-transparent"
                         />
                       </label>
                     </div>
 
                     {/* Step 3: Upload Manual Audit */}
-                    <div className="space-y-3">
+                    <div className={`space-y-3 ${!validationFileDownloaded ? 'opacity-50 pointer-events-none' : ''}`}>
                       <div className="flex items-center gap-2 mb-2">
                         <div className="w-8 h-8 rounded-full bg-segro-red text-white flex items-center justify-center font-bold text-sm">
                           3

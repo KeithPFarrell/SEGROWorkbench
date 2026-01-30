@@ -137,8 +137,8 @@ export const MeterExceptions: React.FC = () => {
                   <div>
                     <h4 className="font-bold text-yellow-900 mb-1">Missing Meters Detected</h4>
                     <p className="text-sm text-yellow-800">
-                      The agent has identified <strong>{currentTask.missingMeterCount} meters</strong> that are missing
-                      from the UL 360 registry. These must be resolved before meter data can be uploaded.
+                      We've identified <strong>{currentTask.missingMeterCount} meters</strong> that are missing
+                      or incorrect in the UL 360 Meter Registry. An upload file can not be provided for these meters until they're created and/or updated in UL 360.
                     </p>
                   </div>
                 </div>
@@ -146,25 +146,7 @@ export const MeterExceptions: React.FC = () => {
 
               {/* Workflow Steps */}
               <div className="space-y-4">
-                {/* Step 1: Identify Missing Meters */}
-                <Card accent="teal" className="bg-segro-teal-accent/5">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-segro-teal-accent text-white flex items-center justify-center font-bold flex-shrink-0">
-                      ✓
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-segro-charcoal mb-2">Identify Missing Meters</h4>
-                      <p className="text-sm text-segro-midgray mb-2">
-                        Agent automatically detected missing meters during data validation
-                      </p>
-                      <div className="text-sm text-segro-teal-accent font-semibold">
-                        Identified {currentTask.missingMeterCount} missing meters
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Step 2: Generate Exception File */}
+                {/* Step 1: Generate Exception File */}
                 <Card
                   accent={currentTask.exceptionFileGenerated ? 'teal' : 'none'}
                   className={currentTask.exceptionFileGenerated ? 'bg-segro-teal-accent/5' : 'bg-white'}
@@ -177,7 +159,7 @@ export const MeterExceptions: React.FC = () => {
                           : 'bg-segro-red text-white'
                       }`}
                     >
-                      {currentTask.exceptionFileGenerated ? '✓' : '2'}
+                      {currentTask.exceptionFileGenerated ? '✓' : '1'}
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-segro-charcoal mb-2">Download Exception File</h4>
@@ -191,7 +173,7 @@ export const MeterExceptions: React.FC = () => {
                           onClick={handleGenerateException}
                           disabled={isProcessing}
                         >
-                          {isProcessing ? 'Generating...' : 'Download Exception File'}
+                          {isProcessing ? 'Generating...' : 'Download File'}
                         </Button>
                       )}
                       {currentTask.exceptionFileGenerated && (
@@ -224,12 +206,12 @@ export const MeterExceptions: React.FC = () => {
                           : 'bg-segro-lightgray text-segro-midgray'
                       }`}
                     >
-                      {currentTask.registryImported ? '✓' : '3'}
+                      {currentTask.registryImported ? '✓' : '2'}
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-segro-charcoal mb-2">Import Corrected Registry from UL 360</h4>
                       <p className="text-sm text-segro-midgray mb-3">
-                        After adding the missing meters in UL 360, import the updated registry file
+                        Once you've updated the meter registry in UL 360, export it and attach it below.
                       </p>
                       {currentTask.exceptionFileGenerated && !currentTask.registryImported && (
                         <div className="space-y-3">
@@ -304,7 +286,7 @@ export const MeterExceptions: React.FC = () => {
                           : 'bg-segro-lightgray text-segro-midgray'
                       }`}
                     >
-                      {currentTask.reprocessingTriggered ? '✓' : '4'}
+                      {currentTask.reprocessingTriggered ? '✓' : '3'}
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-segro-charcoal mb-2">Reprocess Meter Data</h4>

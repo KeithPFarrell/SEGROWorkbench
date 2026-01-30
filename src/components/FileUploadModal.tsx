@@ -5,7 +5,7 @@ import { Market } from '../types';
 interface FileUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onUpload: (file: File, market: Market, cycle: string) => void;
+  onUpload: (file: File, market: Market) => void;
 }
 
 export const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -15,7 +15,6 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
 }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedMarket, setSelectedMarket] = useState<Market>('UK');
-  const [cycle, setCycle] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -60,15 +59,14 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
   };
 
   const handleUploadClick = () => {
-    if (selectedFile && cycle.trim()) {
-      onUpload(selectedFile, selectedMarket, cycle);
+    if (selectedFile) {
+      onUpload(selectedFile, selectedMarket);
       handleClose();
     }
   };
 
   const handleClose = () => {
     setSelectedFile(null);
-    setCycle('');
     setSelectedMarket('UK');
     onClose();
   };
@@ -187,23 +185,6 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
             </select>
           </div>
 
-          {/* Cycle Input */}
-          <div>
-            <label className="block text-sm font-semibold text-segro-charcoal mb-2">
-              Billing Cycle
-            </label>
-            <input
-              type="text"
-              value={cycle}
-              onChange={(e) => setCycle(e.target.value)}
-              placeholder="e.g., January 2026"
-              className="w-full px-4 py-3 border border-segro-lightgray rounded-lg focus:outline-none focus:ring-2 focus:ring-segro-teal focus:border-transparent"
-            />
-            <p className="text-xs text-segro-midgray mt-1">
-              Enter the billing cycle period for this data
-            </p>
-          </div>
-
           {/* Actions */}
           <div className="flex gap-3 pt-4">
             <Button
@@ -218,7 +199,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
               variant="primary"
               size="md"
               onClick={handleUploadClick}
-              disabled={!selectedFile || !cycle.trim()}
+              disabled={!selectedFile}
               className="flex-1 !bg-segro-teal !text-white hover:!bg-segro-teal-accent disabled:!bg-segro-lightgray disabled:!text-segro-midgray"
             >
               Upload File

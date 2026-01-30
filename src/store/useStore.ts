@@ -24,6 +24,7 @@ interface AppState {
   activityLog: ActivityLogEntry[];
   meterDataCycles: MeterDataCycle[];
   archiveFiles: ArchiveFile[];
+  currentUsername: string;
 
   // Actions
   updateUL360Task: (id: string, updates: Partial<UL360Task>) => void;
@@ -31,6 +32,7 @@ interface AppState {
   updateValidationTask: (id: string, updates: Partial<ValidationTask>) => void;
   addActivityLog: (entry: Omit<ActivityLogEntry, 'id' | 'timestamp'>) => void;
   addArchiveFile: (file: Omit<ArchiveFile, 'id' | 'generatedAt'>) => void;
+  setCurrentUsername: (username: string) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -41,6 +43,7 @@ export const useStore = create<AppState>((set) => ({
   activityLog: initialActivityLog,
   meterDataCycles: initialMeterDataCycles,
   archiveFiles: initialArchiveFiles,
+  currentUsername: 'Sarah Mitchell', // Default user
 
   // Update UL360 Task
   updateUL360Task: (id, updates) =>
@@ -80,6 +83,8 @@ export const useStore = create<AppState>((set) => ({
           ...entry,
           id: `log-${Date.now()}`,
           timestamp: new Date().toISOString(),
+          // Automatically add username for Human actors
+          username: entry.actor === 'Human' ? (entry.username || state.currentUsername) : undefined,
         },
         ...state.activityLog,
       ],
@@ -96,5 +101,11 @@ export const useStore = create<AppState>((set) => ({
         },
         ...state.archiveFiles,
       ],
+    })),
+
+  // Set Current Username
+  setCurrentUsername: (username) =>
+    set(() => ({
+      currentUsername: username,
     })),
 }));

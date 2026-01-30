@@ -8,13 +8,23 @@ import { Market } from '../types';
 export const ActivityLog: React.FC = () => {
   const { activityLog } = useStore();
   const [filterMarket, setFilterMarket] = useState<Market | 'all'>('all');
-  const [filterActor, setFilterActor] = useState<'all' | 'Agent' | 'Human'>('all');
+  const [filterActor, setFilterActor] = useState<string>('all');
 
   const markets: Market[] = ['UK', 'CZ', 'DE', 'ES', 'FR', 'IT', 'NL', 'PL'];
 
+  // Get unique actors (Agent and all unique usernames)
+  const actors = ['all', 'Agent', ...Array.from(new Set(
+    activityLog
+      .filter(log => log.actor === 'Human' && log.username)
+      .map(log => log.username!)
+  ))];
+
   const filteredLogs = activityLog.filter((log) => {
     const matchesMarket = filterMarket === 'all' || log.market === filterMarket;
-    const matchesActor = filterActor === 'all' || log.actor === filterActor;
+    const matchesActor =
+      filterActor === 'all' ||
+      (filterActor === 'Agent' && log.actor === 'Agent') ||
+      (log.actor === 'Human' && log.username === filterActor);
     return matchesMarket && matchesActor;
   });
 
@@ -65,38 +75,17 @@ export const ActivityLog: React.FC = () => {
           {/* Actor Filter */}
           <div>
             <label className="block text-xs font-semibold text-segro-midgray mb-2">FILTER BY ACTOR</label>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setFilterActor('all')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  filterActor === 'all'
-                    ? 'bg-segro-red text-white'
-                    : 'bg-segro-offwhite text-segro-midgray hover:bg-segro-lightgray'
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => setFilterActor('Agent')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  filterActor === 'Agent'
-                    ? 'bg-segro-red text-white'
-                    : 'bg-segro-offwhite text-segro-midgray hover:bg-segro-lightgray'
-                }`}
-              >
-                Agent
-              </button>
-              <button
-                onClick={() => setFilterActor('Human')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  filterActor === 'Human'
-                    ? 'bg-segro-red text-white'
-                    : 'bg-segro-offwhite text-segro-midgray hover:bg-segro-lightgray'
-                }`}
-              >
-                Human
-              </button>
-            </div>
+            <select
+              value={filterActor}
+              onChange={(e) => setFilterActor(e.target.value)}
+              className="px-3 py-1.5 rounded-lg text-sm font-semibold border border-segro-lightgray bg-white text-segro-charcoal focus:outline-none focus:ring-2 focus:ring-segro-red focus:border-transparent"
+            >
+              {actors.map((actor) => (
+                <option key={actor} value={actor}>
+                  {actor === 'all' ? 'All' : actor}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </Card>
@@ -146,7 +135,7 @@ export const ActivityLog: React.FC = () => {
                             : 'bg-segro-red/10 text-segro-red'
                         }`}
                       >
-                        {log.actor}
+                        {log.actor === 'Human' && log.username ? log.username : log.actor}
                       </span>
                       <span className="text-xs text-segro-midgray">{formatRelativeTime(log.timestamp)}</span>
                     </div>
