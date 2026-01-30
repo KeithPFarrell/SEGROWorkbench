@@ -187,11 +187,10 @@ MTR-012,Missing Values,Incomplete consumption data,Requires Correction`;
 
               {/* Resolution Workflow */}
               {!currentTask.auditFileUploaded ? (
-                <Card accent="none" className="bg-white">
-                  <h3 className="font-bold text-segro-charcoal mb-4">Resolve Validation Error</h3>
-
-                  <div className="space-y-4">
-                    {/* Step 1: Download Validation Errors File */}
+                <div className="space-y-4">
+                  {/* Section 1: Download File */}
+                  <Card accent="none" className="bg-white">
+                    <h3 className="font-bold text-segro-charcoal mb-4">Step 1: Download Validation Errors</h3>
                     <Card
                       accent={validationFileDownloaded ? 'teal' : 'none'}
                       className={validationFileDownloaded ? 'bg-segro-teal-accent/5' : 'bg-white'}
@@ -227,78 +226,84 @@ MTR-012,Missing Values,Incomplete consumption data,Requires Correction`;
                         </div>
                       </div>
                     </Card>
+                  </Card>
 
-                    {/* Step 2: Add Fix Note */}
-                    <div className={`space-y-3 ${!validationFileDownloaded ? 'opacity-50 pointer-events-none' : ''}`}>
-                      <label className="block">
+                  {/* Section 2: Record Resolution */}
+                  <Card accent="none" className={`bg-white ${!validationFileDownloaded ? 'opacity-50 pointer-events-none' : ''}`}>
+                    <h3 className="font-bold text-segro-charcoal mb-4">Steps 2 & 3: Record Resolution</h3>
+                    <div className="space-y-4">
+                      {/* Step 2: Add Fix Note */}
+                      <div className="space-y-3">
+                        <label className="block">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-full bg-segro-red text-white flex items-center justify-center font-bold text-sm">
+                              2
+                            </div>
+                            <span className="font-bold text-segro-charcoal">What did you fix?</span>
+                            <span className="text-segro-red text-sm">*</span>
+                          </div>
+                          <textarea
+                            value={fixNote}
+                            onChange={(e) => setFixNote(e.target.value)}
+                            placeholder="Add a short note describing the reason for the errors. This helps us prevent the same issues in future."
+                            className="w-full h-24 p-3 border border-segro-lightgray rounded-lg text-sm resize-none focus:ring-2 focus:ring-segro-teal focus:border-transparent"
+                          />
+                        </label>
+                      </div>
+
+                      {/* Step 3: Upload Manual Audit */}
+                      <div className="space-y-3">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-8 h-8 rounded-full bg-segro-red text-white flex items-center justify-center font-bold text-sm">
-                            2
+                            3
                           </div>
-                          <span className="font-bold text-segro-charcoal">What did you fix?</span>
+                          <span className="font-bold text-segro-charcoal">Upload Manual Audit File</span>
                           <span className="text-segro-red text-sm">*</span>
                         </div>
-                        <textarea
-                          value={fixNote}
-                          onChange={(e) => setFixNote(e.target.value)}
-                          placeholder="Add a short note describing the reason for the errors. This helps us prevent the same issues in future."
-                          className="w-full h-24 p-3 border border-segro-lightgray rounded-lg text-sm resize-none focus:ring-2 focus:ring-segro-teal focus:border-transparent"
-                        />
-                      </label>
-                    </div>
-
-                    {/* Step 3: Upload Manual Audit */}
-                    <div className={`space-y-3 ${!validationFileDownloaded ? 'opacity-50 pointer-events-none' : ''}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-segro-red text-white flex items-center justify-center font-bold text-sm">
-                          3
-                        </div>
-                        <span className="font-bold text-segro-charcoal">Upload Manual Audit File</span>
-                        <span className="text-segro-red text-sm">*</span>
-                      </div>
-                      <label className="block cursor-pointer">
-                        <div className="border-2 border-dashed border-segro-midgray rounded-lg p-4 hover:border-segro-teal transition-colors">
-                          <div className="flex items-center gap-3">
-                            <svg
-                              className="w-6 h-6 text-segro-midgray"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                              />
-                            </svg>
-                            <div>
-                              <div className="text-sm font-semibold text-segro-charcoal">
-                                {uploadedAudit ? uploadedAudit.name : 'Drop audit file or click to browse'}
+                        <label className="block cursor-pointer">
+                          <div className="border-2 border-dashed border-segro-midgray rounded-lg p-4 hover:border-segro-teal transition-colors">
+                            <div className="flex items-center gap-3">
+                              <svg
+                                className="w-6 h-6 text-segro-midgray"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                />
+                              </svg>
+                              <div>
+                                <div className="text-sm font-semibold text-segro-charcoal">
+                                  {uploadedAudit ? uploadedAudit.name : 'Drop audit file or click to browse'}
+                                </div>
+                                <div className="text-xs text-segro-midgray">Excel or PDF files</div>
                               </div>
-                              <div className="text-xs text-segro-midgray">Excel or PDF files</div>
                             </div>
                           </div>
-                        </div>
-                        <input
-                          type="file"
-                          className="hidden"
-                          accept=".xlsx,.xls,.pdf"
-                          onChange={handleFileChange}
-                        />
-                      </label>
-                    </div>
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept=".xlsx,.xls,.pdf"
+                            onChange={handleFileChange}
+                          />
+                        </label>
+                      </div>
 
-                    <Button
-                      variant="secondary"
-                      onClick={handleAuditUpload}
-                      disabled={!fixNote.trim() || !uploadedAudit}
-                      className="w-full"
-                    >
-                      Submit & Mark as Completed
-                    </Button>
-                  </div>
-                </Card>
+                      <Button
+                        variant="secondary"
+                        onClick={handleAuditUpload}
+                        disabled={!fixNote.trim() || !uploadedAudit}
+                        className="w-full"
+                      >
+                        Submit & Mark as Completed
+                      </Button>
+                    </div>
+                  </Card>
+                </div>
               ) : (
                 <Card accent="teal" className="bg-segro-teal-accent/5">
                   <div className="flex items-start gap-3">
