@@ -25,9 +25,9 @@ interface User {
 }
 
 const users: User[] = [
-  { id: '1', name: 'Sarah Mitchell', initials: 'SM', role: 'ESG Manager' },
-  { id: '2', name: 'James Thompson', initials: 'JT', role: 'Data Analyst' },
-  { id: '3', name: 'Emma Rodriguez', initials: 'ER', role: 'Compliance Officer' },
+  { id: '1', name: 'Gabriella Zepf', initials: 'GZ', role: 'Director, Sustainability, Group Operations' },
+  { id: '2', name: 'David Dunbar', initials: 'DD', role: 'Energy Manager' },
+  { id: '3', name: 'Stefan Butler', initials: 'SB', role: 'Analyst, Energy & Utilities' },
 ];
 
 function AppContent() {

@@ -76,6 +76,7 @@ export interface ArchiveFile {
   size: string;
   type: 'upload' | 'exception' | 'audit';
   downloadUrl: string;
+  fileData?: File; // Store the actual uploaded file
 }
 
 export interface WorkflowStage {

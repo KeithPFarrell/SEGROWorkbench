@@ -21,15 +21,8 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
   const markets: Market[] = ['UK', 'CZ', 'DE', 'ES', 'FR', 'IT', 'NL', 'PL'];
 
   const handleFileSelect = (file: File) => {
-    // Validate file type
-    const validExtensions = ['.xlsx', '.xls', '.csv'];
-    const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
-    if (validExtensions.includes(fileExtension)) {
-      setSelectedFile(file);
-    } else {
-      alert('Please select a valid Excel or CSV file (.xlsx, .xls, .csv)');
-    }
+    // Accept any file type
+    setSelectedFile(file);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -119,7 +112,6 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".xlsx,.xls,.csv"
                 onChange={handleFileInputChange}
                 className="hidden"
               />
@@ -157,9 +149,6 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                   <div>
                     <p className="font-semibold text-segro-charcoal">
                       Drop your file here or click to browse
-                    </p>
-                    <p className="text-sm text-segro-midgray">
-                      Supports Excel (.xlsx, .xls) and CSV files
                     </p>
                   </div>
                 </div>

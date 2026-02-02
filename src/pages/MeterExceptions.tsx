@@ -235,14 +235,14 @@ export const MeterExceptions: React.FC = () => {
                                   <div className="text-sm font-semibold text-segro-charcoal">
                                     {uploadedRegistry ? uploadedRegistry.name : 'Drop registry file or click to browse'}
                                   </div>
-                                  <div className="text-xs text-segro-midgray">Excel files from UL 360</div>
+                                  <div className="text-xs text-segro-midgray">Supports Excel (.xlsx, .xls) or .CSV files</div>
                                 </div>
                               </div>
                             </div>
                             <input
                               type="file"
                               className="hidden"
-                              accept=".xlsx,.xls"
+                              accept=".xlsx,.xls,.csv"
                               onChange={handleFileChange}
                             />
                           </label>

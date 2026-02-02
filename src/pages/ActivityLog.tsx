@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { Card } from '../components/Card';
-import { MarketBadge } from '../components/MarketBadge';
 import { useStore } from '../store/useStore';
 import { formatRelativeTime, formatDateTime } from '../utils/dateFormat';
-import { Market } from '../types';
 
 export const ActivityLog: React.FC = () => {
   const { activityLog } = useStore();
-  const [filterMarket, setFilterMarket] = useState<Market | 'all'>('all');
   const [filterActor, setFilterActor] = useState<string>('all');
-
-  const markets: Market[] = ['UK', 'CZ', 'DE', 'ES', 'FR', 'IT', 'NL', 'PL'];
 
   // Get unique actors (Agent and all unique usernames)
   const actors = ['all', 'Agent', ...Array.from(new Set(
@@ -20,12 +15,11 @@ export const ActivityLog: React.FC = () => {
   ))];
 
   const filteredLogs = activityLog.filter((log) => {
-    const matchesMarket = filterMarket === 'all' || log.market === filterMarket;
     const matchesActor =
       filterActor === 'all' ||
       (filterActor === 'Agent' && log.actor === 'Agent') ||
       (log.actor === 'Human' && log.username === filterActor);
-    return matchesMarket && matchesActor;
+    return matchesActor;
   });
 
   return (
@@ -40,38 +34,6 @@ export const ActivityLog: React.FC = () => {
       {/* Filters */}
       <Card accent="none">
         <div className="flex flex-wrap items-center gap-4">
-          {/* Market Filter */}
-          <div>
-            <label className="block text-xs font-semibold text-segro-midgray mb-2">FILTER BY MARKET</label>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setFilterMarket('all')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  filterMarket === 'all'
-                    ? 'bg-segro-red text-white'
-                    : 'bg-segro-offwhite text-segro-midgray hover:bg-segro-lightgray'
-                }`}
-              >
-                All
-              </button>
-              {markets.map((market) => (
-                <button
-                  key={market}
-                  onClick={() => setFilterMarket(market)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                    filterMarket === market
-                      ? 'bg-segro-red text-white'
-                      : 'bg-segro-offwhite text-segro-midgray hover:bg-segro-lightgray'
-                  }`}
-                >
-                  {market}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="w-px h-12 bg-segro-lightgray"></div>
-
           {/* Actor Filter */}
           <div>
             <label className="block text-xs font-semibold text-segro-midgray mb-2">FILTER BY ACTOR</label>
@@ -127,7 +89,6 @@ export const ActivityLog: React.FC = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <MarketBadge market={log.market} size="sm" />
                       <span
                         className={`text-xs font-bold px-2 py-0.5 rounded ${
                           log.actor === 'Agent'

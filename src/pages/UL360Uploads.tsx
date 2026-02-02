@@ -86,7 +86,7 @@ export const UL360Uploads: React.FC = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
       {/* Left Panel - Task List */}
-      <div className="lg:col-span-1 overflow-y-auto">
+      <div className="lg:col-span-1 overflow-y-auto p-0.5">
         <h2 className="text-2xl font-bold text-segro-charcoal mb-4">UL 360 Upload Tasks</h2>
         <div className="space-y-3">
           {ul360Tasks.map((task) => (
@@ -116,7 +116,7 @@ export const UL360Uploads: React.FC = () => {
       </div>
 
       {/* Right Panel - Task Detail */}
-      <div className="lg:col-span-2 overflow-y-auto">
+      <div className="lg:col-span-2 overflow-y-auto p-0.5">
         {currentTask ? (
           <Card accent="teal">
             <div className="flex items-start justify-between mb-6">
@@ -308,14 +308,14 @@ export const UL360Uploads: React.FC = () => {
                                     <div className="text-sm font-semibold text-segro-charcoal">
                                       {uploadedFile ? uploadedFile.name : 'Drop file here or click to browse'}
                                     </div>
-                                    <div className="text-xs text-segro-midgray">Excel files only</div>
+                                    <div className="text-xs text-segro-midgray">Supports Excel (.xlsx, .xls) or .CSV files</div>
                                   </div>
                                 </div>
                               </div>
                               <input
                                 type="file"
                                 className="hidden"
-                                accept=".xlsx,.xls"
+                                accept=".xlsx,.xls,.csv"
                                 onChange={handleFileChange}
                               />
                             </label>

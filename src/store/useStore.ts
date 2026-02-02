@@ -43,7 +43,7 @@ export const useStore = create<AppState>((set) => ({
   activityLog: initialActivityLog,
   meterDataCycles: initialMeterDataCycles,
   archiveFiles: initialArchiveFiles,
-  currentUsername: 'Sarah Mitchell', // Default user
+  currentUsername: 'Gabriella Zepf', // Default user
 
   // Update UL360 Task
   updateUL360Task: (id, updates) =>

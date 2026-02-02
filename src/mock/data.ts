@@ -25,7 +25,7 @@ export const ul360Tasks: UL360Task[] = [
   {
     id: 'ul360-1',
     type: 'upload',
-    title: 'Meter Data Upload - December 2025',
+    title: 'Upload to UL 360',
     description: 'Upload meter data for consumption',
     market: 'UK',
     status: 'pending',
@@ -41,7 +41,7 @@ export const ul360Tasks: UL360Task[] = [
   {
     id: 'ul360-2',
     type: 'upload',
-    title: 'Meter Data Upload - November 2025',
+    title: 'Upload to UL 360',
     description: 'Upload meter data for consumption',
     market: 'CZ',
     status: 'attention',
@@ -65,7 +65,7 @@ export const meterExceptionTasks: MeterExceptionTask[] = [
   {
     id: 'exception-1',
     type: 'meter-exception',
-    title: 'Missing Meters - UK Portfolio',
+    title: 'Meter Registry Exceptions',
     description: 'Identify and resolve missing meters in UK registry',
     market: 'UK',
     status: 'attention',
@@ -80,7 +80,7 @@ export const meterExceptionTasks: MeterExceptionTask[] = [
   {
     id: 'exception-2',
     type: 'meter-exception',
-    title: 'Missing Meters - DE Portfolio',
+    title: 'Meter Registry Exceptions',
     description: 'Identify and resolve missing meters in Germany registry',
     market: 'DE',
     status: 'pending',
@@ -95,7 +95,7 @@ export const meterExceptionTasks: MeterExceptionTask[] = [
   {
     id: 'exception-3',
     type: 'meter-exception',
-    title: 'Missing Meters - FR Portfolio',
+    title: 'Meter Registry Exceptions',
     description: 'Identify and resolve missing meters in France registry',
     market: 'FR',
     status: 'attention',
@@ -110,7 +110,7 @@ export const meterExceptionTasks: MeterExceptionTask[] = [
   {
     id: 'exception-4',
     type: 'meter-exception',
-    title: 'Missing Meters - PL Portfolio',
+    title: 'Meter Registry Exceptions',
     description: 'Identify and resolve missing meters in Poland registry',
     market: 'PL',
     status: 'attention',
@@ -125,7 +125,7 @@ export const meterExceptionTasks: MeterExceptionTask[] = [
   {
     id: 'exception-5',
     type: 'meter-exception',
-    title: 'Missing Meters - ES Portfolio',
+    title: 'Meter Registry Exceptions',
     description: 'Identify and resolve missing meters in Spain registry',
     market: 'ES',
     status: 'attention',
@@ -144,7 +144,7 @@ export const validationTasks: ValidationTask[] = [
   {
     id: 'validation-1',
     type: 'validation',
-    title: 'Data Quality Issues - UK December',
+    title: 'Data Validation Errors',
     description: 'Review and correct the data validation errors flagged below.',
     market: 'UK',
     status: 'attention',
@@ -172,7 +172,7 @@ export const activityLog: ActivityLogEntry[] = [
     id: 'log-2',
     timestamp: '2026-01-20T13:22:00Z',
     actor: 'Human',
-    username: 'Sarah Mitchell',
+    username: 'Gabriella Zepf',
     action: 'Uploaded Error Report',
     market: 'CZ',
     taskId: 'ul360-2',
@@ -191,7 +191,7 @@ export const activityLog: ActivityLogEntry[] = [
     id: 'log-4',
     timestamp: '2026-01-20T09:15:00Z',
     actor: 'Human',
-    username: 'Sarah Mitchell',
+    username: 'Gabriella Zepf',
     action: 'Reviewed Data Validation Errors',
     market: 'UK',
     taskId: 'validation-1',
@@ -210,7 +210,7 @@ export const activityLog: ActivityLogEntry[] = [
     id: 'log-6',
     timestamp: '2026-01-19T14:20:00Z',
     actor: 'Human',
-    username: 'Sarah Mitchell',
+    username: 'Gabriella Zepf',
     action: 'Downloaded Upload File',
     market: 'UK',
     taskId: 'ul360-1',
@@ -295,7 +295,7 @@ export const workflowStages: WorkflowStage[] = [
   {
     id: 'import',
     title: 'Import New Meter Data',
-    description: 'Import meter data from registries, validate exceptions, and upload to UL 360 platform',
+    description: 'Import country meter data, validate exceptions, and upload to UL 360 platform',
     taskCount: 2,
     meterCount: 8,
     status: 'success',

@@ -27,19 +27,31 @@ export const Dashboard: React.FC = () => {
     // Simulate AI processing
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    const response = `Based on the UK meter data for December 2025:
+    const response = `I've completed a meter-specific audit for UK December 2025 cycle and generated a comprehensive audit file.
 
-• Total meters processed: 345
-• Success rate: 98%
-• Meters with exceptions: 17
-• Data quality issues: 12 meters with incomplete consumption data
+📊 Audit Summary:
+• Meters audited: 345
+• Flagged for review: 23 meters
+• Critical issues: 5 meters
+• File generated: UK_Meter_Audit_Report_Dec2025.xlsx
 
-The agent has identified 17 meters missing from the registry (UK1230 deactivation) and flagged 12 meters with missing values that require manual review. The orchestration system has automatically generated exception files and is awaiting human approval to proceed with registry updates.
+🔍 Key Findings:
+• Meter ID MTR-UK-1847: Consumption spike detected (340% above baseline)
+• Meter ID MTR-UK-2103: Missing data for 15-day period (Dec 10-24)
+• Meter ID MTR-UK-2891: Negative consumption values detected
+• Meter ID MTR-UK-3456: Data transmission failures (last successful: Dec 8)
+• Meter ID MTR-UK-4201: Duplicate readings on multiple dates
 
-Recommended next steps:
-1. Review the exception file for the 17 missing meters
-2. Import the corrected registry from UL 360
-3. Approve the reprocessing workflow for the 12 meters with data quality issues`;
+The audit file includes:
+✓ Detailed meter-by-meter analysis
+✓ Historical consumption comparisons
+✓ Data quality scores for each meter
+✓ Recommended corrective actions
+
+Next steps:
+1. Download the audit file for detailed review
+2. Investigate flagged meters with site teams
+3. Correct data issues and re-upload via UL 360`;
 
     setAuditResponse(response);
     setIsProcessing(false);
@@ -71,6 +83,7 @@ Recommended next steps:
       size: formatFileSize(file.size),
       type: fileType,
       downloadUrl: `/api/files/${file.name}`,
+      fileData: file, // Store the actual file for later download
     });
 
     // Add activity log entry
@@ -111,7 +124,7 @@ Recommended next steps:
               </h2>
             </div>
             <p className="text-segro-midgray text-sm mb-4">
-              Import meter data from registries, validate exceptions, and upload to UL 360 platform
+              Import country meter data, validate exceptions, and upload to UL 360 platform
             </p>
 
             {/* Cards Grid */}
@@ -218,7 +231,7 @@ Recommended next steps:
               </h2>
             </div>
             <p className="text-segro-midgray text-sm mb-4">
-              Import reconciliation data, validate admin tasks, and sync with UL 360
+              Import reconciliation data, validate attributes, and sync with UL 360
             </p>
 
             {/* Cards Grid */}
@@ -240,7 +253,7 @@ Recommended next steps:
                 </div>
               </div>
 
-              {/* Admin Validation Tasks */}
+              {/* Attribute Validation Tasks */}
               <div className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-yellow-500">
                 <div className="flex items-start gap-3 mb-2">
                   <div className="text-yellow-600">
@@ -249,7 +262,7 @@ Recommended next steps:
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-base mb-1">Admin Validation</div>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">Attribute Validation</div>
                     <div className="text-3xl font-bold text-segro-charcoal mb-1">
                       3 <span className="text-base font-normal text-segro-midgray">tasks</span>
                     </div>
