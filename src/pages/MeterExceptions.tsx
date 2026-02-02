@@ -78,7 +78,7 @@ export const MeterExceptions: React.FC = () => {
       <div>
         <h1 className="text-3xl font-bold text-segro-charcoal mb-2">Meter Registry Exceptions</h1>
         <p className="text-segro-midgray">
-          Identify missing meters, download exception files, and import corrected registries from UL 360
+          Identify missing meters, download exception files, and import corrected registries from UL360
         </p>
       </div>
 
@@ -131,7 +131,7 @@ export const MeterExceptions: React.FC = () => {
                     <h4 className="font-bold text-yellow-900 mb-1">Missing Meters Detected</h4>
                     <p className="text-sm text-yellow-800">
                       We've identified <strong>{currentTask.missingMeterCount} meters</strong> that are missing
-                      or incorrect in the UL 360 Meter Registry. An upload file can not be provided for these meters until they're created and/or updated in UL 360.
+                      or incorrect in the UL360 Meter Registry. An upload file can not be provided for these meters until they're created and/or updated in UL360.
                     </p>
                   </div>
                 </div>
@@ -157,7 +157,7 @@ export const MeterExceptions: React.FC = () => {
                     <div className="flex-1">
                       <h4 className="font-bold text-segro-charcoal mb-2">Download Exception File</h4>
                       <p className="text-sm text-segro-midgray mb-3">
-                        Generate and download a file listing all missing meters for UL 360 review
+                        Generate and download a file listing all missing meters for UL360 review
                       </p>
                       {!currentTask.exceptionFileGenerated && (
                         <Button
@@ -202,9 +202,9 @@ export const MeterExceptions: React.FC = () => {
                       {currentTask.registryImported ? '✓' : '2'}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-bold text-segro-charcoal mb-2">Import Corrected Registry from UL 360</h4>
+                      <h4 className="font-bold text-segro-charcoal mb-2">Import Corrected Registry from UL360</h4>
                       <p className="text-sm text-segro-midgray mb-3">
-                        Once you've updated the meter registry in UL 360, export it and attach it below.
+                        Once you've updated the meter registry in UL360, export it and attach it below.
                       </p>
                       {currentTask.exceptionFileGenerated && !currentTask.registryImported && (
                         <div className="space-y-3">

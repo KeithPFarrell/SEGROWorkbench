@@ -20,12 +20,12 @@ export const meterDataCycles: MeterDataCycle[] = [
   { id: '8', market: 'IT', period: 'November 2025', date: '18/11/25', status: 'stale', qualityScore: 78 },
 ];
 
-// UL 360 Upload Tasks
+// UL360 Upload Tasks
 export const ul360Tasks: UL360Task[] = [
   {
     id: 'ul360-1',
     type: 'upload',
-    title: 'Upload to UL 360',
+    title: 'Upload to UL360',
     description: 'Upload meter data for consumption',
     market: 'UK',
     status: 'pending',
@@ -71,7 +71,7 @@ export const validationTasks: ValidationTask[] = [
     createdAt: '2026-01-17T10:00:00Z',
     updatedAt: '2026-01-20T09:15:00Z',
     errorType: 'Data Validation Errors',
-    errorDetails: '8 meters have data issues and have not been included in the UL 360 upload file. These meters can\'t be processed until the validation errors have been reviewed and corrected.',
+    errorDetails: '8 meters have data issues and have not been included in the UL360 upload file. These meters can\'t be processed until the validation errors have been reviewed and corrected.',
     meterCount: 8,
     auditFileUploaded: false,
   },
@@ -160,7 +160,7 @@ export const activityLog: ActivityLogEntry[] = [
 export const archiveFiles: ArchiveFile[] = [
   {
     id: 'file-1',
-    filename: 'UL 360 Upload File - 2026-01-19.csv',
+    filename: 'UL360 Upload File - 2026-01-19.csv',
     cycle: 'December 2025',
     market: 'UK',
     generatedAt: '2026-01-19T14:35:00Z',
@@ -200,7 +200,7 @@ export const archiveFiles: ArchiveFile[] = [
   },
   {
     id: 'file-5',
-    filename: 'UL 360 Upload File - 2026-01-15.csv',
+    filename: 'UL360 Upload File - 2026-01-15.csv',
     cycle: 'November 2025',
     market: 'DE',
     generatedAt: '2026-01-15T10:30:00Z',
@@ -215,15 +215,15 @@ export const workflowStages: WorkflowStage[] = [
   {
     id: 'import',
     title: 'Import New Meter Data',
-    description: 'Import country meter data, validate exceptions, and upload to UL 360 platform',
+    description: 'Import country meter data, validate exceptions, and upload to UL360 platform',
     taskCount: 2,
     meterCount: 8,
     status: 'success',
   },
   {
     id: 'ul360-upload',
-    title: 'UL 360 Upload Tasks',
-    description: 'Process and upload meter consumption data to UL 360',
+    title: 'UL360 Upload Tasks',
+    description: 'Process and upload meter consumption data to UL360',
     taskCount: 2,
     meterCount: 525,
     status: 'success',

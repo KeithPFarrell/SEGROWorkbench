@@ -204,7 +204,7 @@ MTR-012,Missing Values,Incomplete consumption data,Requires Correction`;
                             <li>Review the validation errors.</li>
                             <li>Resolve the issues offline (using your normal data correction process).</li>
                             <li>Create a manual upload file for the corrected meters.</li>
-                            <li>Upload the manual file into UL 360 and confirm it completes successfully.</li>
+                            <li>Upload the manual file into UL360 and confirm it completes successfully.</li>
                           </ol>
                           {!validationFileDownloaded && (
                             <Button variant="primary" size="sm" onClick={handleDownloadValidationFile}>
@@ -253,6 +253,9 @@ MTR-012,Missing Values,Incomplete consumption data,Requires Correction`;
                           <span className="font-bold text-segro-charcoal">Upload Manual Audit File</span>
                           <span className="text-segro-red text-sm">*</span>
                         </div>
+                        <p className="text-sm text-segro-midgray mb-3">
+                          Please upload the clean UL360 Upload File you created manually, so we can retain it for audit purposes.
+                        </p>
                         <label className="block cursor-pointer">
                           <div className="border-2 border-dashed border-segro-midgray rounded-lg p-4 hover:border-segro-teal transition-colors">
                             <div className="flex items-center gap-3">

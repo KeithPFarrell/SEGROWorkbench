@@ -51,7 +51,7 @@ The audit file includes:
 Next steps:
 1. Download the audit file for detailed review
 2. Investigate flagged meters with site teams
-3. Correct data issues and re-upload via UL 360`;
+3. Correct data issues and re-upload via UL360`;
 
     setAuditResponse(response);
     setIsProcessing(false);
@@ -120,11 +120,11 @@ Next steps:
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               <h2 className="text-xl font-bold text-segro-charcoal">
-                Meter Data Transposition for UL 360
+                Meter Data Transposition for UL360
               </h2>
             </div>
             <p className="text-segro-midgray text-sm mb-4">
-              Import country meter data, validate exceptions, and upload to UL 360 platform
+              Import country meter data, validate exceptions, and upload to UL360 platform
             </p>
 
             {/* Cards Grid */}
@@ -149,7 +149,7 @@ Next steps:
                 </div>
               </div>
 
-              {/* UL 360 Upload Tasks */}
+              {/* UL360 Upload Tasks */}
               <div
                 onClick={() => navigate('/ul360-uploads')}
                 className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-segro-teal cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
@@ -161,7 +161,7 @@ Next steps:
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL 360 Upload</div>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL360 Upload</div>
                     <div className="text-3xl font-bold text-segro-charcoal mb-1">
                       {ul360Tasks.length} <span className="text-base font-normal text-segro-midgray">tasks</span>
                     </div>
@@ -231,7 +231,7 @@ Next steps:
               </h2>
             </div>
             <p className="text-segro-midgray text-sm mb-4">
-              Import reconciliation data, validate attributes, and sync with UL 360
+              Import reconciliation data, validate attributes, and sync with UL360
             </p>
 
             {/* Cards Grid */}
@@ -273,7 +273,7 @@ Next steps:
                 </div>
               </div>
 
-              {/* UL 360 Upload Tasks (Reconciliation) */}
+              {/* UL360 Upload Tasks (Reconciliation) */}
               <div className="bg-white rounded-2xl p-4 border border-segro-lightgray border-l-4 border-l-segro-teal">
                 <div className="flex items-start gap-3 mb-2">
                   <div className="text-segro-teal-accent">
@@ -282,7 +282,7 @@ Next steps:
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL 360 Upload</div>
+                    <div className="font-semibold text-segro-charcoal text-base mb-1">UL360 Upload</div>
                     <div className="text-3xl font-bold text-segro-charcoal mb-1">
                       1 <span className="text-base font-normal text-segro-midgray">task</span>
                     </div>

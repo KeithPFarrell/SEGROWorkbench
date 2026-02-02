@@ -87,7 +87,7 @@ export const UL360Uploads: React.FC = () => {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
       {/* Left Panel - Task List */}
       <div className="lg:col-span-1 overflow-y-auto p-0.5">
-        <h2 className="text-2xl font-bold text-segro-charcoal mb-4">UL 360 Upload Tasks</h2>
+        <h2 className="text-2xl font-bold text-segro-charcoal mb-4">UL360 Upload Tasks</h2>
         <div className="space-y-3">
           {ul360Tasks.map((task) => (
             <Card
@@ -169,7 +169,7 @@ export const UL360Uploads: React.FC = () => {
                       <h4 className="font-bold text-segro-charcoal">Download Upload File</h4>
                     </div>
                     <p className="text-sm text-segro-midgray ml-11 mb-3">
-                      Download File for UL 360
+                      Download File for UL360
                     </p>
                     {!currentTask.downloadCompleted && (
                       <div className="ml-11">
@@ -194,7 +194,7 @@ export const UL360Uploads: React.FC = () => {
                 </div>
               </Card>
 
-              {/* Step 2: Upload to UL 360 */}
+              {/* Step 2: Upload to UL360 */}
               <Card
                 accent={currentTask.uploadCompleted ? 'teal' : 'none'}
                 className={`${
@@ -219,10 +219,10 @@ export const UL360Uploads: React.FC = () => {
                       >
                         2
                       </div>
-                      <h4 className="font-bold text-segro-charcoal">Upload to UL 360</h4>
+                      <h4 className="font-bold text-segro-charcoal">Upload to UL360</h4>
                     </div>
                     <p className="text-sm text-segro-midgray ml-11 mb-3">
-                      Access UL 360 and initiate an upload. When the upload is complete, provide feedback with one of the options below.
+                      Access UL360 and initiate an upload. When the upload is complete, provide feedback with one of the options below.
                     </p>
                     {currentTask.downloadCompleted && !currentTask.uploadCompleted && (
                       <div className="ml-11 flex gap-2">
@@ -283,7 +283,7 @@ export const UL360Uploads: React.FC = () => {
                         <h4 className="font-bold text-segro-charcoal">Review and Correct Errors</h4>
                       </div>
                       <p className="text-sm text-segro-midgray ml-11 mb-3">
-                        Review the errors and manually correct them to ensure they upload successfully to UL 360. Please attach the UL 360 error report below so that we can learn, track, and audit these failures.
+                        Review the errors and manually correct them to ensure they upload successfully to UL360. Please attach the UL360 error report below so that we can learn, track, and audit these failures.
                       </p>
                       {!currentTask.errorReportUploaded && (
                         <div className="ml-11 space-y-3">

@@ -77,7 +77,7 @@ function AppContent() {
     },
     {
       path: '/ul360-uploads',
-      label: 'UL 360 Uploads',
+      label: 'UL360 Uploads',
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
