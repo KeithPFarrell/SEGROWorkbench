@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card } from '../components/Card';
 import { StatusPill } from '../components/StatusPill';
 import { Button } from '../components/Button';
-import { MarketBadge } from '../components/MarketBadge';
 import { useStore } from '../store/useStore';
 
 export const MeterExceptions: React.FC = () => {
@@ -95,10 +94,7 @@ export const MeterExceptions: React.FC = () => {
               className={`cursor-pointer ${selectedTask === task.id ? 'ring-2 ring-segro-teal' : ''}`}
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <MarketBadge market={task.market} />
-                  <StatusPill status={task.status} />
-                </div>
+                <StatusPill status={task.status} />
               </div>
               <h3 className="font-bold text-segro-charcoal mb-2">{task.title}</h3>
               <div className="text-sm">
@@ -115,10 +111,7 @@ export const MeterExceptions: React.FC = () => {
             <Card accent="yellow">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <MarketBadge market={currentTask.market} size="md" />
-                    <h2 className="text-2xl font-bold text-segro-charcoal">{currentTask.title}</h2>
-                  </div>
+                  <h2 className="text-2xl font-bold text-segro-charcoal mb-3">{currentTask.title}</h2>
                   <p className="text-segro-midgray">{currentTask.description}</p>
                 </div>
                 <StatusPill status={currentTask.status} />
